@@ -3,7 +3,13 @@ import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { projects, additionalExperience } from "../data/projects";
 import { highlight } from "../lib/highlight";
-import { revealContainer, revealItem, viewportOnce } from "../lib/motion";
+import {
+  revealContainer,
+  revealItem,
+  revealList,
+  revealLine,
+  viewportOnce,
+} from "../lib/motion";
 import SectionHeader from "./SectionHeader";
 import ProjectVisual from "./ProjectVisual";
 import styles from "./Projects.module.css";
@@ -112,20 +118,30 @@ export default function Projects() {
         </motion.div>
 
         {/* Additional experience — compact list */}
-        <motion.div className={styles.additional} variants={revealItem}>
-          <div className={styles.additionalHead}>
+        <motion.div
+          className={styles.additional}
+          variants={revealList}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+        >
+          <motion.div className={styles.additionalHead} variants={revealLine}>
             <span>// ADDITIONAL_EXPERIENCE</span>
             <span>QTY: 0{additionalExperience.length}</span>
-          </div>
-          <ul className={styles.additionalList}>
+          </motion.div>
+          <motion.ul className={styles.additionalList} variants={revealList}>
             {additionalExperience.map((item) => (
-              <li key={item.org} className={styles.additionalItem}>
+              <motion.li
+                key={item.org}
+                className={styles.additionalItem}
+                variants={revealLine}
+              >
                 <span className={styles.additionalRole}>{item.role}</span>
                 <span className={styles.additionalOrg}>{item.org}</span>
                 <span className={styles.additionalPeriod}>{item.period}</span>
-              </li>
+              </motion.li>
             ))}
-          </ul>
+          </motion.ul>
         </motion.div>
       </motion.div>
     </section>

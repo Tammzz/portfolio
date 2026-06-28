@@ -1,8 +1,8 @@
 // import { Fragment } from "react"; // used by the commented-out animated role marquee
-import { ArrowRight, Check, FileText, Github, Linkedin } from "lucide-react";
+import { Check, FileText, Github, Linkedin } from "lucide-react";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
-import { easeOut, revealItem } from "../lib/motion";
+import { revealItem } from "../lib/motion";
 import { projects } from "../data/projects";
 import styles from "./Hero.module.css";
 
@@ -38,18 +38,9 @@ interface HeroProps {
  * `npm run portfolio` prompt acts as the entry point into the rest of the site.
  */
 export default function Hero({ launched, onLaunch }: HeroProps) {
-  // Before launch, in-page CTAs trigger the launch instead of jumping to
-  // sections that aren't mounted yet.
-  const handleSectionNav = (e: React.MouseEvent) => {
-    if (!launched) {
-      e.preventDefault();
-      onLaunch();
-    }
-  };
-
   return (
     <section id="top" className={styles.hero}>
-      {/* Technical metadata band (desktop) */}
+      {/* Technical metadata band (desktop) 
       <motion.div
         className={styles.meta}
         aria-hidden="true"
@@ -59,7 +50,7 @@ export default function Hero({ launched, onLaunch }: HeroProps) {
       >
         <span>LAT 59.9139° N // LON 10.7522° E</span>
         <span className={styles.metaDim}>[ TRANSMISSION_OK ]</span>
-      </motion.div>
+      </motion.div>*/}
 
       <motion.div
         className={`container ${styles.inner}`}
@@ -201,7 +192,7 @@ export default function Hero({ launched, onLaunch }: HeroProps) {
               <b className={styles.ok}>100%</b>
             </div>
             <div className={styles.prompt}>
-              <span className={styles.pk}>tamera@oslo</span>:~$ npm run portfolio
+              <span className={styles.pk}>tamara@oslo</span>:~$ npm run portfolio
               {!launched && <span className={styles.cursor} aria-hidden="true" />}
             </div>
             {launched ? (

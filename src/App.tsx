@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { MotionConfig, motion } from "framer-motion";
 import { easeOut } from "./lib/motion";
+import CursorReticle from "./components/CursorReticle";
 import GridOverlay from "./components/GridOverlay";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
@@ -53,6 +54,8 @@ export default function App() {
 
   return (
     <MotionConfig reducedMotion="user">
+      <CursorReticle />
+
       {phase === "loading" && <Loader onComplete={() => setPhase("hero")} />}
 
       <GridOverlay />

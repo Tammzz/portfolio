@@ -61,6 +61,13 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+/* Hide the native cursor only when the custom reticle is active (fine pointer).
+   Applies to interactive elements too so they don't restore the OS pointer. */
+.cursor-reticle-on,
+.cursor-reticle-on * {
+  cursor: none !important;
+}
+
 body {
   min-height: 100vh;
   background-color: var(--bg);

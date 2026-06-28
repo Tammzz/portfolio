@@ -40,6 +40,36 @@ export const revealItem: Variants = {
 /** Standalone fade+rise for elements that aren't part of a stagger group. */
 export const fadeUp: Variants = revealItem;
 
+/**
+ * Nested container for rows that should reveal one-by-one as the section
+ * scrolls in (e.g. the additional-experience list). Slightly tighter cadence
+ * than the section-level `revealContainer` so the lines read like a list
+ * printing out rather than a single block floating up.
+ */
+export const revealList: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      delayChildren: 0.12,
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+/**
+ * Row variant for `revealList`. A more pronounced rise + a touch of horizontal
+ * drift so each line clearly enters on its own rather than fading as a group.
+ */
+export const revealLine: Variants = {
+  hidden: { opacity: 0, y: 16, x: -8 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    x: 0,
+    transition: { duration: 0.5, ease: easeOut },
+  },
+};
+
 /** Viewport config shared by scroll-triggered sections. Mirrors the old
  *  IntersectionObserver `rootMargin` and only fires once. */
 export const viewportOnce = {

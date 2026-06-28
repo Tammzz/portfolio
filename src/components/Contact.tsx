@@ -8,6 +8,7 @@ const EMAIL = "tamara.awadh@outlook.com";
 
 const socials = [
   { label: "GitHub", href: "https://github.com/tammzz" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/tamara-awadh" },
   { label: "Resume", href: "/resume.html" },
 ];
 

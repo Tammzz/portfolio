@@ -1,0 +1,71 @@
+/* =========================================================================
+   Custom arrowhead cursor.
+   A filled caret tracks the pointer exactly (its tip is the hotspot) and
+   brightens / tucks in when over interactive elements. Pointer events
+   disabled so it never blocks clicks underneath.
+   ========================================================================= */
+
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.visible {
+  opacity: 1;
+}
+
+/* ---- Arrowhead ---------------------------------------------------------- */
+.dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+.arrow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* viewBox is 24×28, drawn 1:1 so user units == px and strokes stay crisp. */
+  width: 24px;
+  height: 28px;
+  /* The global `svg { max-width: 100% }` rule would clamp this to the
+     zero-width parent and collapse it — opt out so the size holds. */
+  max-width: none;
+  /* Nudge so the path's (6,4) top vertex lands on the exact pointer. */
+  margin: -4px 0 0 -6px;
+  fill: none; /* open triangle — outline only */
+  stroke: var(--green);
+  stroke-width: 2.2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 5px var(--green-glow));
+  transform-origin: 6px 4px; /* scale about the hotspot */
+  transition: transform 0.2s var(--ease), stroke 0.2s ease, filter 0.2s ease;
+}
+
+.tail {
+  stroke-width: 2;
+}
+
+/* On lock-on the cursor tucks in slightly and brightens to full green. */
+.locked .arrow {
+  transform: scale(0.82);
+  stroke: #d7ffc7;
+  filter: drop-shadow(0 0 6px var(--green-glow));
+}
+
+/* Click gives a quick press-in. */
+.pressed .arrow {
+  transform: scale(0.7);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrow {
+    transition: none;
+  }
+}
