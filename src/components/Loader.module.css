@@ -1,0 +1,52 @@
+/* Full-screen boot overlay: sits above everything while the hero mounts
+   underneath, then blinks out to reveal it. */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.6rem;
+  background: var(--bg);
+  will-change: opacity;
+}
+
+.brand {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  letter-spacing: 0.18em;
+  color: var(--fg);
+}
+
+.track {
+  position: relative;
+  width: min(320px, 70vw);
+  height: 2px;
+  background: var(--border-strong);
+  overflow: hidden;
+}
+
+.fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  height: 100%;
+  background: var(--pink);
+  box-shadow: 0 0 10px var(--pink-glow);
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  width: min(320px, 70vw);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.count {
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
+}

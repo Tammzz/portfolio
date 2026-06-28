@@ -1,0 +1,93 @@
+.heading {
+  font-size: clamp(2.4rem, 7vw, 4.5rem);
+  margin-bottom: 3rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  border: 1px solid var(--border);
+  background: var(--border);
+}
+
+@media (min-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: var(--bg);
+  padding: 1.75rem 1.5rem;
+  transition: background-color var(--speed) var(--ease);
+}
+.card:hover {
+  background: rgba(244, 244, 245, 0.02);
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Per-card accent (alternates pink / green via [data-accent]) */
+.card[data-accent="green"] .code {
+  color: var(--green);
+}
+.card[data-accent="pink"] .code {
+  color: var(--pink);
+}
+
+.plus {
+  color: rgba(244, 244, 245, 0.2);
+  transition: color var(--speed) var(--ease);
+}
+.card[data-accent="green"]:hover .plus {
+  color: var(--green);
+}
+.card[data-accent="pink"]:hover .plus {
+  color: var(--pink);
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+}
+
+.cardDesc {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.7;
+}
+
+.cardLine {
+  display: block;
+  height: 1px;
+  width: 2rem;
+  margin-top: 1rem;
+  background: var(--green-soft);
+  transition: width 0.5s var(--ease), background-color 0.5s var(--ease);
+}
+.card[data-accent="pink"] .cardLine {
+  background: var(--pink-soft);
+}
+.card:hover .cardLine {
+  width: 100%;
+}
+.card[data-accent="green"]:hover .cardLine {
+  background: var(--green);
+}
+.card[data-accent="pink"]:hover .cardLine {
+  background: var(--pink);
+}

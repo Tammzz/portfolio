@@ -1,0 +1,37 @@
+.row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 3rem;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(244, 244, 245, 0.7);
+  white-space: nowrap;
+}
+
+.rule {
+  flex: 1;
+  height: 1px;
+  background: var(--border-strong);
+}
+
+.meta {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .meta {
+    display: inline;
+  }
+}

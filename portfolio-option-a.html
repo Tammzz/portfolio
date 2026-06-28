@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tamera Ayash — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+  :root{
+    --bg:#0B0B0D; --panel:#101013; --line:rgba(255,255,255,.08);
+    --ink:#F2F2F0; --dim:#6E6E78; --dim2:#86868e;
+    --pink:#FF2D87; --lime:#C2F261;
+    --mono:'JetBrains Mono',ui-monospace,monospace;
+    --grotesk:'Space Grotesk',system-ui,sans-serif;
+    --inst:'Instrument Serif',Georgia,serif;
+  }
+  html{ -webkit-font-smoothing:antialiased; }
+  body{ background:var(--bg); color:var(--ink); font-family:var(--mono); }
+  a{ color:inherit; }
+  .wrap{ max-width:1320px; margin:0 auto; padding:0 clamp(20px,5vw,64px); }
+
+  /* ============ LOADER OVERLAY ============ */
+  .loader{
+    position:fixed; inset:0; z-index:100; background:var(--bg);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px; text-align:center;
+  }
+  .loader .logo{ font-size:clamp(18px,2.4vw,26px); letter-spacing:.18em; color:var(--ink); }
+  .loadbar{ width:min(260px,60vw); height:2px; background:rgba(255,255,255,.12); overflow:hidden; }
+  .loadbar i{ display:block; height:100%; width:0; background:var(--pink);
+    box-shadow:0 0 10px var(--pink); transition:width 1.5s cubic-bezier(.4,0,.1,1); }
+  .loadtxt{ font-size:11px; letter-spacing:.3em; color:var(--dim); }
+  /* the blink: a hard terminal flicker, then gone — revealing the hero already mounted behind it */
+  .loader.blink{ animation:blinkout .42s steps(1,end) forwards; }
+  @keyframes blinkout{
+    0%{opacity:1} 12%{opacity:0} 24%{opacity:1} 40%{opacity:0} 56%{opacity:1} 72%{opacity:0} 100%{opacity:0; visibility:hidden;}
+  }
+
+  /* ============ NAVBAR ============ */
+  .topbar{ display:flex; align-items:center; justify-content:space-between; gap:28px;
+    padding:22px clamp(20px,5vw,64px); border-bottom:1px solid var(--line);
+    font-size:12px; letter-spacing:.14em; }
+  .topbar .left{ display:flex; align-items:center; gap:20px; min-width:0; }
+  .topbar .brand{ color:var(--ink); white-space:nowrap; }
+  .topbar .sep{ width:1px; height:13px; background:rgba(255,255,255,.16); flex:0 0 auto; }
+  .topbar .status{ color:var(--dim); white-space:nowrap; }
+  .topbar .status .dot{ display:inline-block; width:7px; height:7px; border-radius:50%;
+    background:var(--pink); margin-right:9px; vertical-align:1px; box-shadow:0 0 8px var(--pink); }
+  .topbar .status time{ color:var(--ink); font-variant-numeric:tabular-nums; }
+  .topbar nav{ display:flex; gap:24px; flex-wrap:wrap; justify-content:flex-end; }
+  .topbar nav a{ color:var(--dim); text-decoration:none; white-space:nowrap; transition:color .15s; }
+  .topbar nav a:hover{ color:var(--pink); }
+  .topbar nav a:focus-visible{ outline:2px solid var(--pink); outline-offset:3px; }
+
+  /* ============ HERO ============ */
+  .grid{ display:grid; grid-template-columns:1.55fr .8fr; gap:56px; align-items:center;
+    padding:clamp(40px,7vh,90px) 0; }
+  .eyebrow{ color:var(--pink); font-size:13px; letter-spacing:.32em; margin-bottom:24px; }
+  h1{ font-family:var(--grotesk); font-weight:700; letter-spacing:-.02em;
+    font-size:clamp(52px,8vw,108px); line-height:.92; }
+  .tag{ font-family:var(--inst); font-size:clamp(26px,3.4vw,46px); line-height:1.15;
+    margin:30px 0 28px; max-width:18ch; color:#cfcfcc; }
+  .tag i{ font-style:italic; } .tag .p{ color:var(--pink); } .tag .c{ color:var(--lime); }
+  .desc{ max-width:46ch; color:var(--dim2); font-size:14px; line-height:1.75; }
+
+  .panel{ border:1px solid rgba(255,255,255,.1); background:var(--panel); border-radius:4px; }
+  .panel .bar{ display:flex; align-items:center; gap:9px; padding:12px 14px;
+    border-bottom:1px solid var(--line); font-size:11px; color:var(--dim); letter-spacing:.12em; }
+  .panel .bar .dot{ width:9px; height:9px; border-radius:50%; background:var(--pink); }
+  .panel .body{ padding:18px 16px; font-size:13px; line-height:2.1; color:#9a9aa2; }
+  .panel .body b{ color:var(--ink); font-weight:500; }
+  .panel .row{ display:flex; justify-content:space-between; gap:16px; }
+  .panel .ok{ color:var(--lime); }
+  .panel .prompt{ margin-top:14px; padding-top:14px; border-top:1px solid var(--line); color:var(--dim2); }
+  .panel .prompt .pk{ color:var(--pink); }
+  .runhint{ display:inline-block; margin-top:12px; background:none; border:0; cursor:pointer;
+    font-family:var(--mono); font-size:13px; letter-spacing:.06em; color:var(--dim2); }
+  .runhint b{ color:var(--lime); font-weight:500; }
+  .runhint:hover b{ text-decoration:underline; }
+  .runhint:focus-visible{ outline:2px solid var(--lime); outline-offset:3px; }
+  .caret{ display:inline-block; width:8px; height:15px; background:var(--lime);
+    vertical-align:-2px; margin-left:3px; animation:blink 1.05s steps(1) infinite; }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  .foot{ display:flex; justify-content:space-between; color:#56565e;
+    font-size:11px; letter-spacing:.14em; padding:0 0 34px; }
+
+  /* hero entrance (only after the blink) */
+  .hero.intro > *{ opacity:0; transform:translateY(10px); animation:rise .6s ease forwards; }
+  .hero.intro .grid{ animation-delay:.06s; }
+  @keyframes rise{ to{ opacity:1; transform:none; } }
+
+  /* ============ REVEALED PORTFOLIO (clean fade, no drop) ============ */
+  .reveal{ opacity:0; }
+  .reveal.show{ opacity:1; transition:opacity .55s ease; }
+  .pf{ border-top:1px solid var(--line); }
+  .pf-sec{ max-width:1320px; margin:0 auto; padding:clamp(44px,7vw,80px) clamp(20px,5vw,64px); border-bottom:1px solid var(--line); }
+  .pf-tag{ color:var(--pink); font-size:12px; letter-spacing:.3em; display:block; margin-bottom:24px; }
+  .pf-lead{ font-family:var(--inst); font-size:clamp(24px,3.4vw,42px); line-height:1.3; max-width:24ch; color:#e6e6e2; }
+  .pf-rows{ display:flex; flex-direction:column; }
+  .pf-row{ display:flex; align-items:center; gap:18px; padding:24px 4px; border-top:1px solid var(--line);
+    text-decoration:none; color:var(--ink); font-family:var(--grotesk); font-size:clamp(20px,2.6vw,32px); transition:.18s; }
+  .pf-row:last-child{ border-bottom:1px solid var(--line); }
+  .pf-row .pf-dim{ margin-left:auto; font-family:var(--mono); font-size:13px; color:var(--dim); }
+  .pf-row .pf-ar{ font-family:var(--mono); color:var(--dim); }
+  .pf-row:hover{ color:var(--pink); padding-left:14px; }
+  .pf-row:hover .pf-ar{ color:var(--pink); }
+  .pf-contact .pf-mail{ font-family:var(--grotesk); font-size:clamp(28px,5vw,58px); text-decoration:none; color:var(--ink); }
+  .pf-contact .pf-mail:hover{ color:var(--lime); }
+
+  @media (max-width:1140px){ .topbar .status, .topbar .sep{ display:none; } }
+  @media (max-width:860px){
+    .topbar{ flex-wrap:wrap; row-gap:16px; }
+    .topbar nav{ width:100%; justify-content:flex-start; gap:20px; }
+    .grid{ grid-template-columns:1fr; gap:34px; }
+  }
+  @media (max-width:560px){ h1{ font-size:clamp(44px,13vw,80px); } }
+
+  @media (prefers-reduced-motion:reduce){
+    .loader.blink{ animation:none; opacity:0; visibility:hidden; }
+    .hero.intro > *{ opacity:1; transform:none; animation:none; }
+    .reveal.show{ transition:none; }
+    .caret{ animation:none; }
+    .loadbar i{ transition:width .2s linear; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ===== loader (sits on top while the page mounts behind) ===== -->
+  <div class="loader" id="loader">
+    <div class="logo">[/] TAMERA.AYASH</div>
+    <div class="loadbar"><i id="bar"></i></div>
+    <div class="loadtxt">INITIALIZING SESSION</div>
+  </div>
+
+  <!-- ===== hero (already mounted; loader blinks away to reveal it) ===== -->
+  <div class="hero" id="hero">
+    <header class="topbar">
+      <div class="left">
+        <span class="brand">[/] TAMERA.AYASH</span>
+        <span class="sep" aria-hidden="true"></span>
+        <span class="status"><span class="dot"></span>SYS.ACTIVE // OSLO <time id="clock">--:--</time></span>
+      </div>
+      <nav>
+        <a href="#about">[01] ABOUT</a>
+        <a href="#experience">[02] EXPERIENCE</a>
+        <a href="#expertise">[03] EXPERTISE</a>
+        <a href="#stack">[04] STACK</a>
+        <a href="#contact">[05] CONTACT</a>
+      </nav>
+    </header>
+
+    <main class="wrap">
+      <div class="grid">
+        <div>
+          <p class="eyebrow">FULL-STACK DEVELOPER · DESIGNER</p>
+          <h1>Tamera<br>Ayash</h1>
+          <p class="tag">I build experiences where <i class="p">design</i> &amp; <i class="c">code</i> meet.</p>
+          <p class="desc">Based in Oslo. I craft modern, minimal interfaces that feel polished without becoming overcomplicated — from the database to the last pixel.</p>
+        </div>
+        <aside class="panel" aria-label="Status">
+          <div class="bar"><span class="dot"></span>STATUS.LOG</div>
+          <div class="body">
+            <div class="row"><span>location</span><b>Oslo, NO</b></div>
+            <div class="row"><span>availability</span><b class="ok">OPEN ●</b></div>
+            <div class="row"><span>focus</span><b>UI systems</b></div>
+            <div class="prompt">
+              <span class="pk">tamera@oslo</span>:~$ <span id="cmd">npm run portfolio</span><span class="caret" id="caret"></span>
+              <button class="runhint" id="runhint">▸ press <b>ENTER</b> to launch</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+      <div class="foot"><span>↓ SCROLL TO INDEX</span><span>[ 01 / 05 ]</span></div>
+    </main>
+  </div>
+
+  <!-- ===== rest of portfolio, revealed on launch ===== -->
+  <div class="reveal" id="reveal"></div>
+
+<script>
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let phase = 'boot';
+
+  const loader = document.getElementById('loader');
+  const hero   = document.getElementById('hero');
+  const bar    = document.getElementById('bar');
+  const reveal = document.getElementById('reveal');
+  const runhint= document.getElementById('runhint');
+  const cmd    = document.getElementById('cmd');
+  const caret  = document.getElementById('caret');
+
+  /* live Oslo clock */
+  function tick(){
+    document.getElementById('clock').textContent =
+      new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Oslo',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date());
+  }
+  tick(); setInterval(tick,1000);
+
+  /* boot: fill bar, then blink the loader away to reveal the hero in place */
+  function boot(){
+    requestAnimationFrame(()=> bar.style.width='100%');
+    const hold = reduce ? 500 : 1650;
+    setTimeout(()=>{
+      loader.classList.add('blink');
+      const blinkDur = reduce ? 40 : 420;
+      setTimeout(()=>{
+        loader.remove();
+        hero.classList.add('intro');     // hero settles in crisply after the blink
+        phase = 'entry';
+      }, blinkDur);
+    }, hold);
+  }
+
+  /* launch: pressing ENTER in the prompt unlocks the rest of the portfolio */
+  function launch(){
+    if(phase !== 'entry') return;
+    phase = 'unlocked';
+    runhint.style.display = 'none';
+    caret.style.display = 'none';
+    cmd.innerHTML = 'npm run portfolio<br><span style="color:var(--lime)">✓ portfolio mounted</span>';
+    reveal.innerHTML = portfolioHTML();
+    requestAnimationFrame(()=> reveal.classList.add('show'));
+    setTimeout(()=> reveal.scrollIntoView({behavior: reduce?'auto':'smooth', block:'start'}), 90);
+  }
+
+  document.addEventListener('keydown', e=>{
+    if(e.key==='Enter' && phase==='entry'){ e.preventDefault(); launch(); }
+  });
+  runhint.addEventListener('click', launch);   // tap fallback (mobile / mouse)
+
+  function portfolioHTML(){
+    return `
+      <section class="pf">
+        <div class="pf-sec" id="about">
+          <span class="pf-tag">[01] ABOUT</span>
+          <p class="pf-lead">Full-stack developer &amp; graphic designer in Oslo, crafting modern, minimal interfaces — polished, never overcomplicated.</p>
+        </div>
+        <div class="pf-sec" id="work">
+          <span class="pf-tag">[03] SELECTED WORK</span>
+          <div class="pf-rows">
+            <a class="pf-row"><span>Nordic Banking Dashboard</span><span class="pf-dim">2025</span><span class="pf-ar">↗</span></a>
+            <a class="pf-row"><span>Aurora Design System</span><span class="pf-dim">2024</span><span class="pf-ar">↗</span></a>
+            <a class="pf-row"><span>Fjord Commerce Platform</span><span class="pf-dim">2024</span><span class="pf-ar">↗</span></a>
+          </div>
+        </div>
+        <div class="pf-sec pf-contact" id="contact">
+          <span class="pf-tag">[05] CONTACT</span>
+          <a class="pf-mail">hello@tamera.dev →</a>
+        </div>
+      </section>`;
+  }
+
+  boot();
+</script>
+</body>
+</html>

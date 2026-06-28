@@ -1,0 +1,354 @@
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 6rem var(--gutter) 4rem;
+  overflow: hidden;
+}
+
+.inner {
+  position: relative;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 6vw, 3.5rem);
+}
+
+.lead {
+  min-width: 0;
+}
+
+.meta {
+  position: absolute;
+  top: 5.5rem;
+  left: var(--gutter);
+  right: var(--gutter);
+  z-index: 10;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.metaDim {
+  color: rgba(244, 244, 245, 0.3);
+}
+
+.eyebrow {
+  margin-bottom: 1.6rem;
+}
+
+.name {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: clamp(52px,8vw,108px) /*clamp(2.1rem, 7.9vw, 5.5rem)*/;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+/* ---- Role line (muted mono, beneath the name) ------------------------- */
+.roleLine {
+  margin-top: 1.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+/* ===== Role tag — animated looping marquee pill (kept for comparison) =====
+   Re-enable by uncommenting this block AND the marquee JSX in Hero.tsx
+   (plus the `import { Fragment } from "react"` line).
+
+.roleTag {
+  position: relative;
+  margin-top: 1.6rem;
+  max-width: min(100%, 32rem);
+  padding: 0.6rem 0;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  overflow: hidden;
+  Fade the content out near both rounded edges:
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+}
+
+The scrolling track holds two identical copies of the role list, so a shift of
+exactly -50% lands on the start of the second copy seamlessly.
+.track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: clamp(0.85rem, 1.8vw, 1.1rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  color: rgba(244, 244, 245, 0.82);
+  animation: role-scroll 16s linear infinite;
+}
+
+Per-item trailing space (not flex gap) keeps the period uniform across the wrap
+point, which is what makes the -50% loop invisible.
+.track > * {
+  margin-right: clamp(0.9rem, 2.6vw, 1.7rem);
+}
+
+.role {
+  flex-shrink: 0;
+}
+
+Pink 4-point sparkle separator (twinkle/glow currently disabled):
+.star {
+  display: inline-flex;
+  flex-shrink: 0;
+  font-size: 0.75em;
+  color: var(--pink);
+}
+
+@keyframes role-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+  }
+}
+
+===== end animated role tag ===== */
+
+.tagline {
+  margin-top: 1.5rem;
+  max-width: 30rem;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  color: rgba(244, 244, 245, 0.85);
+}
+
+/* Italic accent words, scaled up to pop within the serif tagline 
+.accent {
+  font-size: 1.15em;
+} */
+
+.sub {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.subText {
+  max-width: 34rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  line-height: 1.8;
+  color: var(--muted);
+}
+
+/* ---- Social icons (between intro and CTA) ----------------------------- */
+.socials {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+.socialIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  color: var(--muted);
+  border: 1px solid var(--border-strong);
+  transition: border-color var(--speed) var(--ease),
+    color var(--speed) var(--ease), background-color var(--speed) var(--ease);
+}
+.socialIcon:hover {
+  color: var(--pink);
+  border-color: var(--pink);
+  background: rgba(244, 0, 161, 0.06);
+}
+
+/* ---- Call to action --------------------------------------------------- */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2.75rem;
+}
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg);
+  border: 1px solid var(--pink-soft);
+  padding: 0.85rem 1.4rem;
+  transition: border-color var(--speed) var(--ease),
+    color var(--speed) var(--ease), background-color var(--speed) var(--ease);
+}
+.cta:hover {
+  border-color: var(--pink);
+  color: var(--pink);
+  background: rgba(244, 0, 161, 0.06);
+}
+.ctaGhost {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0.85rem 0.25rem;
+  border-bottom: 1px solid transparent;
+  transition: color var(--speed) var(--ease), border-color var(--speed) var(--ease);
+}
+.ctaGhost:hover {
+  color: var(--green);
+  border-color: var(--green-soft);
+}
+
+/* ---- Terminal status panel (fills the former right-side dead space) --- */
+.panel {
+  position: relative;
+  align-self: center;
+  border: 1px solid var(--border-strong);
+  background: var(--card);
+  font-family: var(--font-mono);
+}
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--pink);
+  box-shadow: 0 0 8px var(--pink-glow);
+  animation: pulse-dot 2.4s var(--ease) infinite;
+}
+.body {
+  padding: 1.1rem 1rem;
+  font-size: 0.8125rem;
+  line-height: 2;
+  color: var(--muted);
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.row b {
+  font-weight: 500;
+  color: var(--fg);
+}
+/* Boot-log lines: a green check marker followed by build output. */
+.bootLine {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted);
+}
+/* Lucide <Check> used as the boot/mounted marker. */
+.check {
+  flex-shrink: 0;
+  color: var(--green);
+}
+.ok {
+  color: var(--green) !important;
+}
+.prompt {
+  margin-top: 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  word-break: break-all;
+}
+.pk {
+  color: var(--pink);
+}
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 0.95em;
+  margin-left: 3px;
+  vertical-align: -0.12em;
+  background: var(--green);
+  animation: blink 1.05s steps(1) infinite;
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* ---- Launch gate (replaces the old scroll-to-index affordance) -------- */
+.launchHint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.85rem;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green);
+  animation: blink 1.4s steps(1) infinite;
+  transition: color var(--speed) var(--ease);
+}
+.launchHint:hover {
+  color: var(--fg);
+  animation: none;
+}
+.caret {
+  color: var(--pink);
+}
+.kbd {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--fg);
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  padding: 0.1rem 0.4rem;
+}
+.mounted {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--green);
+}
+
+@media (min-width: 768px) {
+  .meta {
+    display: flex;
+  }
+  .inner {
+    grid-template-columns: 1.6fr 0.9fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: center;
+  }
+}

@@ -1,0 +1,35 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .overlay {
+    display: block;
+  }
+}
+
+.grid {
+  /* Gap between the content container edges and the framing grid lines. */
+  --grid-gap: 1.5rem;
+
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  height: 100%;
+
+  /* Sit --grid-gap outside the 72rem content container so the first and last
+     lines frame the page content, while never overflowing the page gutter on
+     narrower desktop viewports. */
+  width: min(100% - 2 * var(--gutter), calc(var(--container) + 2 * var(--grid-gap)));
+  margin-inline: auto;
+}
+
+.col {
+  border-left: 1px solid var(--grid-line);
+}
+.col:last-child {
+  border-right: 1px solid var(--grid-line);
+}

@@ -1,0 +1,129 @@
+.frame {
+  position: relative;
+  border: 1px solid var(--border);
+  background: var(--card);
+  padding: 0.5rem;
+}
+
+.canvas {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--card);
+}
+
+.svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.55;
+}
+
+.grid {
+  stroke: rgba(244, 244, 245, 0.18);
+  stroke-width: 0.3;
+}
+.ring {
+  stroke: rgba(244, 244, 245, 0.5);
+  stroke-width: 0.4;
+}
+.ringPink {
+  stroke: var(--pink);
+  stroke-width: 0.9;
+  opacity: 0.7;
+}
+.link {
+  stroke: rgba(244, 244, 245, 0.6);
+  stroke-width: 0.6;
+}
+.node {
+  stroke: rgba(244, 244, 245, 0.6);
+  stroke-width: 0.6;
+}
+.nodeGreen {
+  stroke: rgba(244, 244, 245, 0.6);
+  stroke-width: 0.7;
+  opacity: 0.8;
+}
+.dotPink {
+  fill: var(--pink);
+}
+.dotGreen {
+  fill: var(--green);
+}
+
+/* Crosshair */
+.crosshair {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  transform: translate(-50%, -50%);
+  opacity: 0.35;
+  z-index: 2;
+}
+.crossH {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--fg);
+}
+.crossV {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 100%;
+  background: var(--fg);
+}
+
+/* Corner markers */
+.marker {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  z-index: 2;
+}
+.markerTl {
+  top: 12px;
+  left: 12px;
+  border-top: 1px solid var(--pink-soft);
+  border-left: 1px solid var(--pink-soft);
+}
+.markerBr {
+  bottom: 12px;
+  right: 12px;
+  border-bottom: 1px solid var(--pink-soft);
+  border-right: 1px solid var(--pink-soft);
+}
+
+/* Status labels */
+.ref {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.06em;
+  color: rgba(244, 244, 245, 0.7);
+  background: rgba(8, 8, 11, 0.5);
+  border: 1px solid var(--border);
+  padding: 0.25rem 0.5rem;
+  backdrop-filter: blur(4px);
+}
+.active {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+  color: var(--green);
+}

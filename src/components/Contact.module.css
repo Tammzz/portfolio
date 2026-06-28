@@ -1,0 +1,64 @@
+.contact {
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  padding: 8rem var(--gutter);
+}
+@media (min-width: 768px) {
+  .contact {
+    padding-block: 12rem;
+  }
+}
+
+.inner {
+  position: relative;
+  z-index: 10;
+  max-width: 64rem;
+}
+
+.heading {
+  font-size: clamp(2.8rem, 11vw, 7rem);
+  line-height: 0.95;
+}
+
+.email {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 3rem;
+  font-family: var(--font-display);
+  font-weight: 350;
+  font-size: clamp(1.4rem, 3.5vw, 2rem);
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  border-bottom: 1px solid var(--pink-soft);
+  padding-bottom: 0.35rem;
+  transition: color var(--speed) var(--ease);
+}
+.email:hover {
+  color: var(--pink);
+}
+
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 4rem;
+}
+.social {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color var(--speed) var(--ease);
+}
+.social:hover {
+  color: var(--pink);
+}
+.socialArrow {
+  opacity: 0.6;
+}
