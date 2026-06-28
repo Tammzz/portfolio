@@ -13,11 +13,10 @@
 }
 
 .grid {
-  /* Gap between the content container edges and the framing grid lines. */
-  --grid-gap: 1.5rem;
-
+  /* --grid-gap (gap between content container edges and framing lines) is
+     defined in :root so the section divider nodes can reuse it. */
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: 1fr;
   height: 100%;
 
   /* Sit --grid-gap outside the 72rem content container so the first and last

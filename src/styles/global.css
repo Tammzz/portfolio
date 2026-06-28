@@ -35,6 +35,9 @@
   /* ---- Layout ------------------------------------------------------------ */
   --container: 72rem;
   --gutter: 1.5rem;
+  /* Gap between the content container and the framing grid lines (see
+     GridOverlay). Shared so divider nodes stay locked to the lines. */
+  --grid-gap: 1.5rem;
 
   /* ---- Motion ------------------------------------------------------------ */
   --ease: cubic-bezier(0.16, 1, 0.32, 1);
@@ -84,6 +87,18 @@ body {
   position: relative;
   min-height: 100vh;
   overflow-x: hidden;
+}
+
+/* ---- Scrollbar — native one hidden; custom rectangular pink bar drawn by
+   <Scrollbar /> (Firefox can't render rectangular scrollbars via CSS). ------ */
+/* Firefox */
+html {
+  scrollbar-width: none;
+}
+/* WebKit / Chromium */
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 a {
@@ -141,6 +156,37 @@ svg {
 @media (min-width: 768px) {
   .section {
     padding-block: 9rem;
+  }
+}
+
+/* Intersection nodes — small squares where a section's top divider crosses the
+   two vertical grid lines. The left/right offset mirrors the GridOverlay
+   geometry (centered --container box framed by --grid-gap, clamped to --gutter
+   on narrow viewports) so they stay locked to the lines at any width; -2px
+   centres the 5px square on the line. Desktop only, matching the overlay. */
+.section::before,
+.section::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  width: 5px;
+  height: 5px;
+  background: rgba(242, 240, 234, 0.5);
+  z-index: 2;
+  pointer-events: none;
+  display: none;
+}
+.section::before {
+  left: calc(max(var(--gutter), 50% - var(--container) / 2 - var(--grid-gap)) - 2px);
+}
+.section::after {
+  right: calc(max(var(--gutter), 50% - var(--container) / 2 - var(--grid-gap)) - 2px);
+}
+
+@media (min-width: 768px) {
+  .section::before,
+  .section::after {
+    display: block;
   }
 }
 

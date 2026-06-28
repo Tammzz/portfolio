@@ -248,6 +248,9 @@ Pink 4-point sparkle separator (twinkle/glow currently disabled):
   animation: pulse-dot 2.4s var(--ease) infinite;
 }
 .body {
+  /* Reserve the settled height so the panel doesn't reflow while the boot
+     sequence prints its lines in one at a time. */
+  min-height: 14rem;
   padding: 1.1rem 1rem;
   font-size: 0.8125rem;
   line-height: 2;

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { tools } from "../data/tools";
+import { toolCategories } from "../data/tools";
 import { revealContainer, revealItem, viewportOnce } from "../lib/motion";
 import SectionHeader from "./SectionHeader";
 import styles from "./TechStack.module.css";
@@ -29,18 +29,27 @@ export default function TechStack() {
           <span className="corner corner-bl" style={{ borderColor: "var(--border-strong)" }} />
           <span className="corner corner-br" style={{ borderColor: "var(--border-strong)" }} />
 
-          <motion.ul className={styles.pills} variants={revealContainer}>
-            {tools.map((tool) => (
-              <motion.li key={tool.name} className={styles.pill} variants={revealItem}>
-                <span
-                  className={styles.indicator}
-                  data-priority={tool.priority}
-                  aria-hidden="true"
-                />
-                {tool.name}
-              </motion.li>
-            ))}
-          </motion.ul>
+          {toolCategories.map((category) => (
+            <motion.div
+              key={category.label}
+              className={styles.group}
+              variants={revealItem}
+            >
+              <h3 className={styles.groupLabel}>{category.label}</h3>
+              <motion.ul className={styles.pills} variants={revealContainer}>
+                {category.tools.map((tool) => (
+                  <motion.li key={tool.name} className={styles.pill} variants={revealItem}>
+                    <span
+                      className={styles.indicator}
+                      data-priority={tool.priority}
+                      aria-hidden="true"
+                    />
+                    {tool.name}
+                  </motion.li>
+                ))}
+              </motion.ul>
+            </motion.div>
+          ))}
         </motion.div>
       </motion.div>
     </section>

@@ -1,8 +1,10 @@
 // import { Fragment } from "react"; // used by the commented-out animated role marquee
+import { useEffect, useState } from "react";
 import { Check, FileText, Github, Linkedin } from "lucide-react";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
-import { revealItem } from "../lib/motion";
+import { easeOut, revealItem } from "../lib/motion";
+import { ScrambleText, Typewriter } from "./Terminal";
 import { projects } from "../data/projects";
 import styles from "./Hero.module.css";
 
@@ -31,13 +33,49 @@ interface HeroProps {
   launched: boolean;
   /** Reveals the rest of the site and scrolls to it. */
   onLaunch: () => void;
+  /** True once the boot loader has finished — kicks off the terminal sequence. */
+  boot: boolean;
 }
+
+/**
+ * Ordered step indices for the terminal boot sequence (see `stage` below). The
+ * STATUS.LOG bar is the always-present panel header shown first; these are the
+ * body lines that print out one at a time after it.
+ */
+const STEP = {
+  LINE_REACT: 0,
+  LINE_PROJECTS: 1,
+  LINE_A11Y: 2,
+  ROW_BUILD: 3,
+  ROW_UPTIME: 4,
+  COMMAND: 5,
+  HINT: 6,
+} as const;
+
+/** Shared fade-in for each terminal line as it prints. Kept subtle (no shake). */
+const lineFade = {
+  initial: { opacity: 0, y: 4 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.3, ease: easeOut },
+} as const;
 
 /**
  * Landing gate: greeting, name, tagline, intro, and the terminal panel whose
  * `npm run portfolio` prompt acts as the entry point into the rest of the site.
  */
-export default function Hero({ launched, onLaunch }: HeroProps) {
+export default function Hero({ launched, onLaunch, boot }: HeroProps) {
+  // Terminal boot sequence: `stage` is the index of the line currently
+  // revealing. Each settled line advances the frontier (idempotently), so the
+  // panel prints out one line at a time once the loader has faded.
+  const [stage, setStage] = useState(-1);
+  const advance = (to: number) => setStage((s) => Math.max(s, to));
+
+  useEffect(() => {
+    if (!boot) return;
+    const id = window.setTimeout(() => setStage((s) => Math.max(s, STEP.LINE_REACT)), 200);
+    return () => window.clearTimeout(id);
+  }, [boot]);
+
   return (
     <section id="top" className={styles.hero}>
       {/* Technical metadata band (desktop) 
@@ -171,46 +209,94 @@ export default function Hero({ launched, onLaunch }: HeroProps) {
             STATUS.LOG
           </div>
           <div className={styles.body}>
-            <div className={styles.bootLine}>
-              <Check className={styles.check} size={14} aria-hidden="true" />
-              react + typescript loaded
-            </div>
-            <div className={styles.bootLine}>
-              <Check className={styles.check} size={14} aria-hidden="true" />
-              {projects.length} projects indexed
-            </div>
-            <div className={styles.bootLine}>
-              <Check className={styles.check} size={14} aria-hidden="true" />
-              a11y audit passed
-            </div>
-            <div className={styles.row}>
-              <span>last build</span>
-              <b>2026-06-28</b>
-            </div>
-            <div className={styles.row}>
-              <span>uptime</span>
-              <b className={styles.ok}>100%</b>
-            </div>
-            <div className={styles.prompt}>
-              <span className={styles.pk}>tamara@oslo</span>:~$ npm run portfolio
-              {!launched && <span className={styles.cursor} aria-hidden="true" />}
-            </div>
+            {(launched || stage >= STEP.LINE_REACT) && (
+              <motion.div className={styles.bootLine} {...lineFade}>
+                <Check className={styles.check} size={14} aria-hidden="true" />
+                <ScrambleText
+                  text="react + typescript loaded"
+                  start={!launched}
+                  onSettle={() => advance(STEP.LINE_PROJECTS)}
+                />
+              </motion.div>
+            )}
+            {(launched || stage >= STEP.LINE_PROJECTS) && (
+              <motion.div className={styles.bootLine} {...lineFade}>
+                <Check className={styles.check} size={14} aria-hidden="true" />
+                <ScrambleText
+                  text={`${projects.length} projects indexed`}
+                  start={!launched}
+                  onSettle={() => advance(STEP.LINE_A11Y)}
+                />
+              </motion.div>
+            )}
+            {(launched || stage >= STEP.LINE_A11Y) && (
+              <motion.div className={styles.bootLine} {...lineFade}>
+                <Check className={styles.check} size={14} aria-hidden="true" />
+                <ScrambleText
+                  text="a11y audit passed"
+                  start={!launched}
+                  onSettle={() => advance(STEP.ROW_BUILD)}
+                />
+              </motion.div>
+            )}
+            {(launched || stage >= STEP.ROW_BUILD) && (
+              <motion.div className={styles.row} {...lineFade}>
+                <span>last build</span>
+                <b>
+                  <ScrambleText
+                    text="2026-06-28"
+                    start={!launched}
+                    onSettle={() => advance(STEP.ROW_UPTIME)}
+                  />
+                </b>
+              </motion.div>
+            )}
+            {(launched || stage >= STEP.ROW_UPTIME) && (
+              <motion.div className={styles.row} {...lineFade}>
+                <span>uptime</span>
+                <b className={styles.ok}>
+                  <ScrambleText
+                    text="100%"
+                    start={!launched}
+                    onSettle={() => advance(STEP.COMMAND)}
+                  />
+                </b>
+              </motion.div>
+            )}
+            {(launched || stage >= STEP.COMMAND) && (
+              <div className={styles.prompt}>
+                <span className={styles.pk}>tamara@oslo</span>:~${" "}
+                {launched ? (
+                  "npm run portfolio"
+                ) : (
+                  <Typewriter
+                    text="npm run portfolio"
+                    start
+                    onSettle={() => advance(STEP.HINT)}
+                  />
+                )}
+                {!launched && <span className={styles.cursor} aria-hidden="true" />}
+              </div>
+            )}
             {launched ? (
               <div className={styles.mounted}>
                 <Check className={styles.check} size={14} aria-hidden="true" />
                 portfolio mounted
               </div>
             ) : (
-              <button
-                type="button"
-                className={styles.launchHint}
-                onClick={onLaunch}
-              >
-                <span className={styles.caret} aria-hidden="true">
-                  ▸
-                </span>
-                press <kbd className={styles.kbd}>ENTER</kbd> to launch
-              </button>
+              stage >= STEP.HINT && (
+                <motion.button
+                  type="button"
+                  className={styles.launchHint}
+                  onClick={onLaunch}
+                  {...lineFade}
+                >
+                  <span className={styles.caret} aria-hidden="true">
+                    ▸
+                  </span>
+                  press <kbd className={styles.kbd}>ENTER</kbd> to launch
+                </motion.button>
+              )
             )}
           </div>
         </motion.aside>

@@ -15,7 +15,7 @@ export default function Footer() {
         </div> 
 
         <div className={styles.meta}>
-          <span>© TAMARA.AWADH 2026 // ALL RIGHTS RESERVED</span>
+          <span>© 2026 TAMARA.AWADH // ALL RIGHTS RESERVED</span>
         </div>
       </div>
       <div className={styles.bottom}>

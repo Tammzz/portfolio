@@ -35,3 +35,9 @@ export interface Tool {
   /** Priority tools render a pink indicator; others muted grey */
   priority: boolean;
 }
+
+export interface ToolCategory {
+  /** Subheading, e.g. "Programming Languages" */
+  label: string;
+  tools: Tool[];
+}

@@ -15,6 +15,20 @@
   }
 }
 
+.group + .group {
+  margin-top: 2rem;
+}
+
+.groupLabel {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 0.9rem;
+}
+
 .pills {
   display: flex;
   flex-wrap: wrap;
