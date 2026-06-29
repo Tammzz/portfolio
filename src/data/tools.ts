@@ -29,8 +29,8 @@ export const toolCategories: ToolCategory[] = [
   {
     label: "Tools & Platforms",
     tools: [
-      { name: "Git / GitHub", priority: false },
-      { name: "Vite", priority: false },
+      { name: "Git / GitHub", priority: true },
+      { name: "Vite", priority: true },
       { name: "Vercel", priority: false },
       { name: "Supabase", priority: false },
       { name: "MongoDB", priority: false },

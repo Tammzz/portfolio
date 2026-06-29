@@ -9,7 +9,9 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 1.1rem var(--gutter);
-  border-bottom: 1px solid transparent;
+  border-bottom: 1px solid var(--border);
+  background-color: var(--bg);
+  /* Smoothly fade in/out the backdrop + border when scrolled. */
   transition: background-color var(--speed) var(--ease),
     border-color var(--speed) var(--ease), backdrop-filter var(--speed) var(--ease);
 }

@@ -35,7 +35,7 @@ export default function Projects() {
         <motion.div variants={revealItem}>
           <SectionHeader
             index="02"
-            label="FIELD_EXPERIENCE"
+            label="EMPLOYMENT_HISTORY"
             meta={`QTY: 0${projects.length}`}
           />
         </motion.div>

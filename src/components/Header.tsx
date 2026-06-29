@@ -63,7 +63,7 @@ export default function Header() {
         <span className={styles.dot} aria-hidden="true" />
         <span>SYS.ACTIVE</span>
         <span className={styles.sep}>//</span>
-        <span aria-label={`Local time ${time} CET`}>{time} CET</span>
+        <span aria-label={`Local time ${time} CET`}>{time} CET (GMT +1)</span>
       </div>
 
       <nav className={styles.nav} aria-label="Primary">
